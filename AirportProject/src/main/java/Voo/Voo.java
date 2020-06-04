@@ -23,16 +23,16 @@ public class Voo implements Cloneable, Comparable<Voo>
     
     public void setNumero(int num) throws Exception
     {
-        if(num == 0)
-            throw new Exception("Número do voo não fornecido");
+        if(num <= 0)
+            throw new Exception("número do voo inválido!");
         
         this.numero = num;
     }
     
     public void setDestino(String dest) throws Exception
     {
-        if(dest.equals(""))
-            throw new Exception("Aeroporto de destino não fornecido");
+        if(dest == null || dest.equals(""))
+            throw new Exception("aeroporto de destino não fornecido!");
         
         this.destino = dest;
     }

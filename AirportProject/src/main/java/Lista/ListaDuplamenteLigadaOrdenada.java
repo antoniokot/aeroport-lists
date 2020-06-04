@@ -289,6 +289,28 @@ public class ListaDuplamenteLigadaOrdenada <X extends Comparable<X>>
         return ret;
     }
     
+    public X getDaPosicao(int i) throws Exception
+    {
+        if(i < 0)
+            throw new Exception("índice inválido");
+        
+        No atual = this.primeiro;
+
+        try
+        {
+            for(int j = 0; j < i; j++)
+            {
+                atual = atual.getProx();
+            }
+            
+            return atual.getInfo();
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("índice inválido");
+        }
+    }
+    
     public X getDoInicio () throws Exception
     {
         if (this.primeiro==null/*&&this.fim==null)*/)

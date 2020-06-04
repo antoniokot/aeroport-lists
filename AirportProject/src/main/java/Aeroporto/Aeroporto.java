@@ -28,16 +28,16 @@ public class Aeroporto implements Cloneable, Comparable<Aeroporto>
     
     public void setCodigo(String cod) throws Exception
     {
-        if(cod.equals(""))
-            throw new Exception("Código não fornecido");
+        if(cod == null || cod.equals(""))
+            throw new Exception("código não fornecido!");
         
         this.codigo = cod;
     }
     
     public void setCidade(String cid) throws Exception
     {
-        if(cid.equals(""))
-            throw new Exception("Cidade não fornecida");
+        if(cid == null || cid.equals(""))
+            throw new Exception("cidade não fornecida!");
         
         this.cidade = cid;
     }
@@ -45,7 +45,7 @@ public class Aeroporto implements Cloneable, Comparable<Aeroporto>
     public void setVoos(ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos) throws Exception
     {
         if(voos == null)
-            throw new Exception("Lista de voos não fornecida");
+            throw new Exception("lista de voos não fornecida!");
         
         this.voos = voos;
     }

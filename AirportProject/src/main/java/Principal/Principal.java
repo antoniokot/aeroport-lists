@@ -1,17 +1,25 @@
 package Principal;
 
+import Aeroporto.*;
+import Voo.*;
+import Lista.*;
+import javax.swing.*;
+import static javax.swing.JOptionPane.*;
+
 /**
  *
  * @author nicol
  */
 public class Principal extends javax.swing.JFrame 
 {
+    protected ListaDuplamenteLigadaOrdenadaSemRepeticao<Aeroporto> aeroportos;
 
     /**
      * Creates new form Principal
      */
     public Principal() 
     {
+        aeroportos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
         initComponents();
     }
 
@@ -38,6 +46,9 @@ public class Principal extends javax.swing.JFrame
         txtCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCidade = new javax.swing.JTextField();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         btnProcurarV = new javax.swing.JButton();
@@ -51,9 +62,11 @@ public class Principal extends javax.swing.JFrame
         txtOrigem = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtDestino = new javax.swing.JTextField();
+        jPanel14 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         cbFiltro = new javax.swing.JComboBox<>();
+        btnExibir = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLista = new javax.swing.JTable();
@@ -75,14 +88,29 @@ public class Principal extends javax.swing.JFrame
 
         btnProcurarA.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnProcurarA.setText("Procurar");
+        btnProcurarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcurarAActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnProcurarA);
 
         btnIncluirA.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnIncluirA.setText("Incluir");
+        btnIncluirA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirAActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnIncluirA);
 
         btnAlterarA.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnAlterarA.setText("Alterar");
+        btnAlterarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarAActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnAlterarA);
 
         btnExcluirA.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -91,7 +119,7 @@ public class Principal extends javax.swing.JFrame
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.PAGE_END);
 
-        jPanel6.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel6.setLayout(new java.awt.GridLayout(5, 2));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText(" Código");
@@ -106,6 +134,9 @@ public class Principal extends javax.swing.JFrame
 
         txtCidade.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jPanel6.add(txtCidade);
+        jPanel6.add(jPanel12);
+        jPanel6.add(jPanel11);
+        jPanel6.add(jPanel13);
 
         jPanel3.add(jPanel6, java.awt.BorderLayout.CENTER);
 
@@ -131,7 +162,7 @@ public class Principal extends javax.swing.JFrame
 
         jPanel2.add(jPanel7, java.awt.BorderLayout.PAGE_END);
 
-        jPanel8.setLayout(new java.awt.GridLayout(3, 2));
+        jPanel8.setLayout(new java.awt.GridLayout(5, 2));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -154,6 +185,7 @@ public class Principal extends javax.swing.JFrame
 
         txtDestino.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jPanel8.add(txtDestino);
+        jPanel8.add(jPanel14);
 
         jPanel2.add(jPanel8, java.awt.BorderLayout.CENTER);
 
@@ -164,6 +196,9 @@ public class Principal extends javax.swing.JFrame
         cbFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Número1", "Número2", "Número3" }));
         jPanel9.add(cbFiltro);
+
+        btnExibir.setText("Exibir");
+        jPanel9.add(btnExibir);
 
         jPanel4.add(jPanel9, java.awt.BorderLayout.PAGE_START);
 
@@ -209,6 +244,90 @@ public class Principal extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnProcurarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarAActionPerformed
+        try
+        {
+            Aeroporto ret = null;
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                ret = aeroportos.getDaPosicao(i);
+                if(ret.getCodigo().equals(txtCodigo.getText()))
+                    break;
+                
+                ret = null;
+            }
+            
+            txtCidade.setText(ret.getCidade());
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Aeroporto não encontrado. Tente novamente!", "Erro!", ERROR_MESSAGE);
+            txtCidade.setText("");
+        }
+    }//GEN-LAST:event_btnProcurarAActionPerformed
+
+    private void btnIncluirAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirAActionPerformed
+        try
+        {
+            String codigo = txtCodigo.getText();
+            String cidade = txtCidade.getText();
+            Aeroporto inc = null;
+            
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                inc = aeroportos.getDaPosicao(i);
+                if(inc.getCodigo().equals(codigo))
+                    throw new Exception("código já existente!");
+            }
+            
+            //Aeroporto já possui validação
+            inc = new Aeroporto(codigo, cidade, new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>());
+            
+            aeroportos.insira(inc);
+            JOptionPane.showMessageDialog(new JFrame(), "Aeroporto incluído com sucesso!", "Sucesso!", INFORMATION_MESSAGE);
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Dados inválidos para inserção: " + ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIncluirAActionPerformed
+
+    private void btnAlterarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarAActionPerformed
+        try
+        {
+            String codigo = txtCodigo.getText();
+            String cidade = txtCidade.getText();
+            boolean tem = false;
+            Aeroporto alt;
+            Aeroporto backup = null;
+            
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                backup = aeroportos.getDaPosicao(i);
+                if(backup.getCodigo().equals(codigo))
+                {
+                    tem = true;
+                    break;
+                }
+            }
+            
+            if(!tem)
+                throw new Exception("aeroporto inexistente!");   
+            
+            //Aeroporto já possui validação
+            alt = new Aeroporto(codigo, cidade, backup.getVoos());
+            aeroportos.remova(backup);
+            aeroportos.insira(alt);
+            
+            JOptionPane.showMessageDialog(new JFrame(), "Aeroporto alterado com sucesso!", "Sucesso!", INFORMATION_MESSAGE);
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Dados inválidos para alteração: " + ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+            txtCidade.setText("");
+        }
+    }//GEN-LAST:event_btnAlterarAActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,6 +371,7 @@ public class Principal extends javax.swing.JFrame
     private javax.swing.JButton btnAlterarV;
     private javax.swing.JButton btnExcluirA;
     private javax.swing.JButton btnExcluirV;
+    private javax.swing.JButton btnExibir;
     private javax.swing.JButton btnIncluirA;
     private javax.swing.JButton btnIncluirV;
     private javax.swing.JButton btnProcurarA;
@@ -265,6 +385,10 @@ public class Principal extends javax.swing.JFrame
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

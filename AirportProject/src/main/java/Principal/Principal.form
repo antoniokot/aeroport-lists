@@ -87,6 +87,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Procurar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProcurarAActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnIncluirA">
                   <Properties>
@@ -95,6 +98,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Incluir"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIncluirAActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarA">
                   <Properties>
@@ -103,6 +109,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarAActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirA">
                   <Properties>
@@ -123,7 +132,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                 <Property name="columns" type="int" value="2"/>
-                <Property name="rows" type="int" value="2"/>
+                <Property name="rows" type="int" value="5"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel2">
@@ -156,6 +165,18 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Container class="javax.swing.JPanel" name="jPanel12">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel11">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel13">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -223,7 +244,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                 <Property name="columns" type="int" value="2"/>
-                <Property name="rows" type="int" value="3"/>
+                <Property name="rows" type="int" value="5"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel4">
@@ -272,6 +293,10 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Container class="javax.swing.JPanel" name="jPanel14">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -313,6 +338,11 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnExibir">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Exibir"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
