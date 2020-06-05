@@ -21,9 +21,9 @@ public class Principal extends javax.swing.JFrame
      */
     public Principal()
     {
-        aeroportos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Aeroporto>();
+        aeroportos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
         
-        carregarPadrao();        
+        carregarPadrao();
         
         initComponents();
         model = (DefaultTableModel)tblLista.getModel();
@@ -89,9 +89,9 @@ public class Principal extends javax.swing.JFrame
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jTabbedPane1.setToolTipText("");
-        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTabbedPane1MouseClicked(evt);
+        jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTabbedPane1FocusGained(evt);
             }
         });
 
@@ -180,10 +180,20 @@ public class Principal extends javax.swing.JFrame
 
         btnAlterarV.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnAlterarV.setText("Alterar");
+        btnAlterarV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarVActionPerformed(evt);
+            }
+        });
         jPanel7.add(btnAlterarV);
 
         btnExcluirV.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnExcluirV.setText("Excluir");
+        btnExcluirV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirVActionPerformed(evt);
+            }
+        });
         jPanel7.add(btnExcluirV);
 
         jPanel2.add(jPanel7, java.awt.BorderLayout.PAGE_END);
@@ -224,9 +234,9 @@ public class Principal extends javax.swing.JFrame
         jPanel9.add(cbFiltro);
 
         btnExibir.setText("Exibir");
-        btnExibir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnExibirMouseClicked(evt);
+        btnExibir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExibirActionPerformed(evt);
             }
         });
         jPanel9.add(btnExibir);
@@ -238,10 +248,7 @@ public class Principal extends javax.swing.JFrame
         tblLista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tblLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Número", "Cidade de Destino"
@@ -432,7 +439,8 @@ public class Principal extends javax.swing.JFrame
         catch(Exception ex)
         {
             JOptionPane.showMessageDialog(new JFrame(), "Voo não encontrado. Verifique se o número é válido e tente novamente!", "Erro!", ERROR_MESSAGE);
-            txtCidade.setText("");
+            txtOrigem.setText("");
+            txtDestino.setText("");
         }
     }//GEN-LAST:event_btnProcurarVActionPerformed
 
@@ -469,7 +477,7 @@ public class Principal extends javax.swing.JFrame
                 for(int j = 0; j < voos.getQtd(); j++)
                 {
                     inc = voos.getDaPosicao(j);
-                    if(inc.getNumero() == Integer.parseInt(txtNumero.getText()))
+                    if(inc.getNumero() == numero)
                         throw new Exception("o número já está sendo utilizado!");
                 }
             }
@@ -503,31 +511,15 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnIncluirVActionPerformed
 
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        try
-        {
-            Aeroporto aero = null;
-            for(int i = 0; i < aeroportos.getQtd(); i++)
-            {
-                aero = aeroportos.getDaPosicao(i);
-                cbFiltro.addItem(aero.getCodigo());
-            }
-        }
-        catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
-
-    private void btnExibirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExibirMouseClicked
+    private void btnExibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirActionPerformed
         try
         {   
             limparTabela();
             
-            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos;
             String opcao = (String)cbFiltro.getSelectedItem();
-            Aeroporto aero = null;
-            Voo voo = null;
+            Aeroporto aero;
+            Voo voo;
             
             if(opcao.toUpperCase().equals("TODOS"))
             {
@@ -549,38 +541,196 @@ public class Principal extends javax.swing.JFrame
         {
             JOptionPane.showMessageDialog(new JFrame(), ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnExibirMouseClicked
+    }//GEN-LAST:event_btnExibirActionPerformed
+
+    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
+        try
+        {
+            Aeroporto aero = null;
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                aero = aeroportos.getDaPosicao(i);
+                cbFiltro.addItem(aero.getCodigo());
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jTabbedPane1FocusGained
+
+    private void btnAlterarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarVActionPerformed
+        try
+        {
+            Voo inc = null;
+            Aeroporto aero = null;
+            Aeroporto aero2 = null;
+            Aeroporto aeroO = null;
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voosO;
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voosD;
+            
+            boolean temOrigem = false;
+            boolean temDestino = false;
+            boolean temNumero = false;
+            int numero = -1;
+            String origem = txtOrigem.getText();
+            String destino = txtDestino.getText();
+            
+            if(destino.equals(origem))
+                throw new Exception("destino é o mesmo local da origem!");
+            try
+            {
+                numero = Integer.parseInt(txtNumero.getText());
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("número em formato inválido!");
+            }
+            
+            
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                aero = aeroportos.getDaPosicao(i);
+                voosD = aero.getVoos();
+                for(int j = 0; j < voosD.getQtd(); j++)
+                {
+                    inc = voosD.getDaPosicao(j);
+                    if(inc.getNumero() == numero)
+                    {
+                        temNumero = true;
+                        break;
+                    }
+                }
+                if(temNumero)
+                    break;
+            }
+            if(!temNumero)
+                throw new Exception("número inválido!");
+            
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                aero2 = aeroportos.getDaPosicao(i);
+                if(aero2.getCodigo().equals(origem))
+                {
+                    aeroO = aero2;
+                    temOrigem = true;
+                }
+                if(aero2.getCodigo().equals(destino))
+                    temDestino = true;
+            }
+            if(!temOrigem || !temDestino)
+                throw new Exception("origem e/ou destino inválidos!");
+            
+            
+            voosO = aeroO.getVoos();
+            voosD = aero.getVoos();
+            voosD.remova(inc);
+            
+            //Voo já possui validação
+            inc = new Voo(numero, destino);
+            
+            voosO.insira(inc);
+            aeroO.setVoos(voosO);
+            
+            JOptionPane.showMessageDialog(new JFrame(), "Voo alterado com sucesso!", "Sucesso!", INFORMATION_MESSAGE);
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Dados inválidos para alteração: " + ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+            txtOrigem.setText("");
+            txtDestino.setText("");
+        }
+    }//GEN-LAST:event_btnAlterarVActionPerformed
+
+    private void btnExcluirVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirVActionPerformed
+        try
+        {
+            int numero = -1;
+            boolean temNumero = false;
+            Voo inc = null;
+            Aeroporto aero;
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos = null;
+            
+            try
+            {
+                numero = Integer.parseInt(txtNumero.getText());
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("número em formato inválido!");
+            }
+            
+            
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                aero = aeroportos.getDaPosicao(i);
+                voos = aero.getVoos();
+                for(int j = 0; j < voos.getQtd(); j++)
+                {
+                    inc = voos.getDaPosicao(j);
+                    if(inc.getNumero() == numero)
+                    {
+                        temNumero = true;
+                        break;
+                    }
+                }
+                if(temNumero)
+                    break;
+            }
+            if(!temNumero)
+                throw new Exception("número inválido!");   
+            
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Você tem certeza de que deseja excluir?", "Atenção", WARNING_MESSAGE);
+            if(dialogResult != JOptionPane.YES_OPTION)
+            {
+                return;
+            }
+            voos.remova(inc);
+            
+            JOptionPane.showMessageDialog(new JFrame(), "Voo removido com sucesso!", "Sucesso!", INFORMATION_MESSAGE);
+            txtOrigem.setText("");
+            txtDestino.setText("");
+            txtNumero.setText("");
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Dados inválidos para deleção: " + ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+            txtOrigem.setText("");
+            txtDestino.setText("");
+            txtNumero.setText("");
+        }
+    }//GEN-LAST:event_btnExcluirVActionPerformed
 
     protected void carregarPadrao() 
     {
         try
         {
-            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
             voos.insira(new Voo(107, "SSA"));
 
             Aeroporto bsb = new Aeroporto("BSB", "Brasília", voos);
 
-            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
             voos.insira(new Voo(214, "SSA"));
             voos.insira(new Voo(555, "GIG"));
             voos.insira(new Voo(101, "GRU"));
 
             Aeroporto cnf = new Aeroporto("CNF", "Belo Horizonte", voos);
 
-            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
             voos.insira(new Voo(554, "CNF"));
             voos.insira(new Voo(90, "GRU"));
 
             Aeroporto gig = new Aeroporto("GIG", "Rio Grande do Sul", voos);
 
-            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
             voos.insira(new Voo(50, "BSB"));
             voos.insira(new Voo(89, "GIG"));
             voos.insira(new Voo(102, "CNF"));
 
             Aeroporto gru = new Aeroporto("GRU", "São Paulo", voos);
 
-            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
             voos.insira(new Voo(215, "CNF"));
 
             Aeroporto ssa = new Aeroporto("SSA", "Salvador", voos);
