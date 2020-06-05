@@ -396,6 +396,7 @@
                             <Column editable="false" title="Cidade de Destino" type="java.lang.String"/>
                           </Table>
                         </Property>
+                        <Property name="dragEnabled" type="boolean" value="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>

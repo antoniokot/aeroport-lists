@@ -5,6 +5,7 @@ import Voo.*;
 import Lista.*;
 import javax.swing.*;
 import static javax.swing.JOptionPane.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,7 +27,8 @@ public class Principal extends javax.swing.JFrame
         carregarPadrao();
         
         initComponents();
-        model = (DefaultTableModel)tblLista.getModel();
+        
+        formatarTabela();
     }
 
     /**
@@ -269,6 +271,7 @@ public class Principal extends javax.swing.JFrame
                 return canEdit [columnIndex];
             }
         });
+        tblLista.setDragEnabled(true);
         jScrollPane1.setViewportView(tblLista);
 
         jPanel10.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -333,7 +336,7 @@ public class Principal extends javax.swing.JFrame
     private void btnAlterarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarAActionPerformed
         try
         {
-            String codigo = txtCodigo.getText();
+            String codigo = txtCodigo.getText().toUpperCase();
             String cidade = txtCidade.getText();
             boolean tem = false;
             Aeroporto alt;
@@ -455,8 +458,8 @@ public class Principal extends javax.swing.JFrame
             boolean temOrigem = false;
             boolean temDestino = false;
             int numero = -1;
-            String origem = txtOrigem.getText();
-            String destino = txtDestino.getText();
+            String origem = txtOrigem.getText().toUpperCase();
+            String destino = txtDestino.getText().toUpperCase();
             
             if(destino.equals(origem))
                 throw new Exception("destino é o mesmo local da origem!");
@@ -519,6 +522,7 @@ public class Principal extends javax.swing.JFrame
             ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos;
             String opcao = (String)cbFiltro.getSelectedItem();
             Aeroporto aero;
+            Aeroporto aeroAux;
             Voo voo;
             
             if(opcao.toUpperCase().equals("TODOS"))
@@ -531,8 +535,31 @@ public class Principal extends javax.swing.JFrame
                     for(int j = 0; j < voos.getQtd(); j++)
                     {
                         voo = voos.getDaPosicao(j);
-                        System.out.println(voo.getDestino());
-                        model.addRow(new String[]{voo.getNumero()+"", voo.getDestino()});
+                        
+                        aeroAux = getDestinoVoo(voo);
+          
+                        model.addRow(new String[]{voo.getNumero()+"", aeroAux.getCidade()});
+                    }
+                }
+            }
+            else
+            {
+                for(int i = 0; i < aeroportos.getQtd(); i++)
+                {
+                    aero = aeroportos.getDaPosicao(i);
+                    
+                    if(opcao.equals(aero.getCodigo()))
+                    {
+                        voos = aero.getVoos();
+                        
+                        for(int j = 0; j < voos.getQtd(); j++)
+                        {
+                            voo = voos.getDaPosicao(j);
+                            
+                            aeroAux = getDestinoVoo(voo); 
+                                                              
+                            model.addRow(new String[]{voo.getNumero()+"", aeroAux.getCidade()});
+                        }
                     }
                 }
             }
@@ -546,12 +573,9 @@ public class Principal extends javax.swing.JFrame
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
         try
         {
-            Aeroporto aero = null;
-            for(int i = 0; i < aeroportos.getQtd(); i++)
-            {
-                aero = aeroportos.getDaPosicao(i);
-                cbFiltro.addItem(aero.getCodigo());
-            }
+            cbFiltro.removeAllItems();
+            
+            carregarFiltro();
         }
         catch(Exception ex)
         {
@@ -573,8 +597,8 @@ public class Principal extends javax.swing.JFrame
             boolean temDestino = false;
             boolean temNumero = false;
             int numero = -1;
-            String origem = txtOrigem.getText();
-            String destino = txtDestino.getText();
+            String origem = txtOrigem.getText().toUpperCase();
+            String destino = txtDestino.getText().toUpperCase();
             
             if(destino.equals(origem))
                 throw new Exception("destino é o mesmo local da origem!");
@@ -701,6 +725,48 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnExcluirVActionPerformed
 
+    protected void carregarFiltro() throws Exception
+    {
+        Aeroporto aero = null;
+        
+        cbFiltro.addItem("TODOS");
+        
+        for(int i = 0; i < aeroportos.getQtd(); i++)
+        {
+            aero = aeroportos.getDaPosicao(i);
+            cbFiltro.addItem(aero.getCodigo());
+        }   
+    }
+    
+    protected Aeroporto getDestinoVoo(Voo voo) throws Exception
+    {
+        Aeroporto ret = null;
+        Aeroporto aero;
+        
+        for(int i = 0; i < aeroportos.getQtd(); i++)
+        {
+            aero = aeroportos.getDaPosicao(i);
+                    
+            if(voo.getDestino().equals(aero.getCodigo()))
+            {
+                ret = aero;
+                break;
+            }
+        }
+        return ret;
+    }
+    
+    protected void formatarTabela()
+    {
+        model = (DefaultTableModel)tblLista.getModel();
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.LEFT );
+        tblLista.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        
+        tblLista.getColumnModel().getColumn(0).setResizable(false);
+    }
+
     protected void carregarPadrao() 
     {
         try
@@ -721,7 +787,7 @@ public class Principal extends javax.swing.JFrame
             voos.insira(new Voo(554, "CNF"));
             voos.insira(new Voo(90, "GRU"));
 
-            Aeroporto gig = new Aeroporto("GIG", "Rio Grande do Sul", voos);
+            Aeroporto gig = new Aeroporto("GIG", "Rio de Janeiro", voos);
 
             voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
             voos.insira(new Voo(50, "BSB"));
@@ -751,9 +817,11 @@ public class Principal extends javax.swing.JFrame
     
     protected void limparTabela()
     {
-        for(int i = 0; i < tblLista.getRowCount(); i++)
+        int qtdLinhas = tblLista.getRowCount();
+        
+        for(int i = 0; i < qtdLinhas; i++)
         {
-            model.removeRow(i);
+            model.removeRow(0);
         }
     }
     
