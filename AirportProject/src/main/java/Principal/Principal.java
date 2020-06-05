@@ -5,6 +5,7 @@ import Voo.*;
 import Lista.*;
 import javax.swing.*;
 import static javax.swing.JOptionPane.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,14 +14,19 @@ import static javax.swing.JOptionPane.*;
 public class Principal extends javax.swing.JFrame 
 {
     protected ListaDuplamenteLigadaOrdenadaSemRepeticao<Aeroporto> aeroportos;
+    protected DefaultTableModel model;
 
     /**
      * Creates new form Principal
      */
-    public Principal() 
+    public Principal()
     {
-        aeroportos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<>();
+        aeroportos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Aeroporto>();
+        
+        carregarPadrao();        
+        
         initComponents();
+        model = (DefaultTableModel)tblLista.getModel();
     }
 
     /**
@@ -83,6 +89,11 @@ public class Principal extends javax.swing.JFrame
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jTabbedPane1.setToolTipText("");
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -209,10 +220,15 @@ public class Principal extends javax.swing.JFrame
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         cbFiltro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Número1", "Número2", "Número3" }));
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS" }));
         jPanel9.add(cbFiltro);
 
         btnExibir.setText("Exibir");
+        btnExibir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExibirMouseClicked(evt);
+            }
+        });
         jPanel9.add(btnExibir);
 
         jPanel4.add(jPanel9, java.awt.BorderLayout.PAGE_START);
@@ -266,7 +282,7 @@ public class Principal extends javax.swing.JFrame
             for(int i = 0; i < aeroportos.getQtd(); i++)
             {
                 ret = aeroportos.getDaPosicao(i);
-                if(ret.getCodigo().equals(txtCodigo.getText()))
+                if(ret.getCodigo().equals(txtCodigo.getText().toUpperCase()))
                     break;
                 
                 ret = null;
@@ -284,7 +300,7 @@ public class Principal extends javax.swing.JFrame
     private void btnIncluirAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirAActionPerformed
         try
         {
-            String codigo = txtCodigo.getText();
+            String codigo = txtCodigo.getText().toUpperCase();
             String cidade = txtCidade.getText();
             Aeroporto inc = null;
             
@@ -487,6 +503,110 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnIncluirVActionPerformed
 
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        try
+        {
+            Aeroporto aero = null;
+            for(int i = 0; i < aeroportos.getQtd(); i++)
+            {
+                aero = aeroportos.getDaPosicao(i);
+                cbFiltro.addItem(aero.getCodigo());
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void btnExibirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExibirMouseClicked
+        try
+        {   
+            limparTabela();
+            
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            String opcao = (String)cbFiltro.getSelectedItem();
+            Aeroporto aero = null;
+            Voo voo = null;
+            
+            if(opcao.toUpperCase().equals("TODOS"))
+            {
+                for(int i = 0; i < aeroportos.getQtd(); i++)
+                {
+                    aero = aeroportos.getDaPosicao(i);
+                    voos = aero.getVoos();
+                    
+                    for(int j = 0; j < voos.getQtd(); j++)
+                    {
+                        voo = voos.getDaPosicao(j);
+                        System.out.println(voo.getDestino());
+                        model.addRow(new String[]{voo.getNumero()+"", voo.getDestino()});
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage() + " Tente novamente!", "Erro!", ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExibirMouseClicked
+
+    protected void carregarPadrao() 
+    {
+        try
+        {
+            ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos.insira(new Voo(107, "SSA"));
+
+            Aeroporto bsb = new Aeroporto("BSB", "Brasília", voos);
+
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos.insira(new Voo(214, "SSA"));
+            voos.insira(new Voo(555, "GIG"));
+            voos.insira(new Voo(101, "GRU"));
+
+            Aeroporto cnf = new Aeroporto("CNF", "Belo Horizonte", voos);
+
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos.insira(new Voo(554, "CNF"));
+            voos.insira(new Voo(90, "GRU"));
+
+            Aeroporto gig = new Aeroporto("GIG", "Rio Grande do Sul", voos);
+
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos.insira(new Voo(50, "BSB"));
+            voos.insira(new Voo(89, "GIG"));
+            voos.insira(new Voo(102, "CNF"));
+
+            Aeroporto gru = new Aeroporto("GRU", "São Paulo", voos);
+
+            voos = new ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo>();
+            voos.insira(new Voo(215, "CNF"));
+
+            Aeroporto ssa = new Aeroporto("SSA", "Salvador", voos);
+
+            voos = null;
+
+            aeroportos.insira(bsb);
+            aeroportos.insira(cnf);
+            aeroportos.insira(gig);
+            aeroportos.insira(gru);
+            aeroportos.insira(ssa);
+            }
+        catch(Exception erro)
+        {
+            // não vai dar erro
+        }
+    }
+    
+    protected void limparTabela()
+    {
+        for(int i = 0; i < tblLista.getRowCount(); i++)
+        {
+            model.removeRow(i);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -518,7 +638,7 @@ public class Principal extends javax.swing.JFrame
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() 
         {
-            public void run() 
+            public void run()
             {
                 new Principal().setVisible(true);
             }

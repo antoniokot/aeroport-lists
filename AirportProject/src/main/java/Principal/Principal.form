@@ -52,6 +52,9 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTabbedPane1MouseClicked"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
           <BorderConstraints direction="Center"/>
@@ -336,11 +339,8 @@
                       <Font name="Segoe UI" size="14" style="0"/>
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Todos"/>
-                        <StringItem index="1" value="N&#xfa;mero1"/>
-                        <StringItem index="2" value="N&#xfa;mero2"/>
-                        <StringItem index="3" value="N&#xfa;mero3"/>
+                      <StringArray count="1">
+                        <StringItem index="0" value="TODOS"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -352,6 +352,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Exibir"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnExibirMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
