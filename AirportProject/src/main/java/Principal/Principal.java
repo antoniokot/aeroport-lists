@@ -372,7 +372,7 @@ public class Principal extends javax.swing.JFrame
     private void btnExcluirAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAActionPerformed
         try
         {
-            String codigo = txtCodigo.getText();
+            String codigo = txtCodigo.getText().toUpperCase();
             boolean tem = false;
             Aeroporto del = null;
             
@@ -560,6 +560,7 @@ public class Principal extends javax.swing.JFrame
                                                               
                             model.addRow(new String[]{voo.getNumero()+"", aeroAux.getCidade()});
                         }
+                        break;
                     }
                 }
             }
