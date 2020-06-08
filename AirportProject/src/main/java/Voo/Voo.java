@@ -6,8 +6,10 @@
 package Voo;
 
 /**
- *
- * @author roger
+ * Esta classe representa um voo.
+ * 
+ * @author Antônio Hideto Borges Kotsubo
+ * @author Nícolas Maisonnette Duarte
  */
 public class Voo implements Cloneable, Comparable<Voo>
 {
@@ -15,11 +17,26 @@ public class Voo implements Cloneable, Comparable<Voo>
     protected int numero;
     protected String destino;
     
+    /**
+     * Construtor.
+     * 
+     * @param num          Representa o número do voo
+     * @param dest         Representa o a cidade destino do voo
+     * @throws Exception   Caso alguma operação de errado 
+     */
+    
     public Voo(int num, String dest) throws Exception
     {
         this.setNumero(num);
         this.setDestino(dest);
     }
+    
+    /**
+     * Este método insere/altera o número de um voo.
+     * 
+     * @param num           Representa o número do voo
+     * @throws Exception    Caso o número seja menor ou igual a zero
+     */
     
     public void setNumero(int num) throws Exception
     {
@@ -29,6 +46,13 @@ public class Voo implements Cloneable, Comparable<Voo>
         this.numero = num;
     }
     
+    /**
+     * Este método insere/altera a cidade destino de um voo.
+     * 
+     * @param dest          Representa acidade destino de um voo
+     * @throws Exception    Caso a cidade destino seja nula ou igual a cadeia vazia
+     */
+    
     public void setDestino(String dest) throws Exception
     {
         if(dest == null || dest.equals(""))
@@ -37,15 +61,33 @@ public class Voo implements Cloneable, Comparable<Voo>
         this.destino = dest;
     }
     
+    /**
+     * Retorna o número de um voo.
+     * 
+     * @return  Retorna o número do voo
+     */
+    
     public int getNumero()
     {
         return this.numero;
     }
     
+    /**
+     * Retorna a cidade destino de um voo
+     * 
+     * @return  Retorna a cidade destino do voo
+     */
+    
     public String getDestino()
     {
         return this.destino;
     }
+    
+    /**
+     * Converte todos os atributos de um voo em uma cadeia de caractéres.
+     * 
+     * @return Retorna os atributos em formato de uma cadeia de caractéres
+     */
     
     @Override
     public String toString()
@@ -57,6 +99,13 @@ public class Voo implements Cloneable, Comparable<Voo>
         
         return ret;
     }
+    
+    /**
+     * Compara dois voos para ver se são iguais.
+     * 
+     * @param obj   Representa o outro voo a ser comparado
+     * @return      Retorna true, se forem iguais; false, se forem diferentes
+     */
     
     @Override
     public boolean equals(Object obj)
@@ -77,6 +126,12 @@ public class Voo implements Cloneable, Comparable<Voo>
         return true;
     }
     
+    /**
+     * Calcula o hashcode de um voo
+     * 
+     * @return Retorna o valor do hashcode do voo
+     */
+    
     @Override
     public int hashCode()
     {
@@ -90,6 +145,12 @@ public class Voo implements Cloneable, Comparable<Voo>
         
         return ret;
     }
+    
+    /**
+     * Clona um voo.
+     * 
+     * @return Retorna uma cópia de um voo
+     */
     
     @Override
     public Object clone()
@@ -107,6 +168,12 @@ public class Voo implements Cloneable, Comparable<Voo>
         return ret;
     }
     
+     /**
+     * Construtor de cópia.
+     * 
+     * @param modelo       Representa um voo modelo que será copiado
+     * @throws Exception   Caso o voo modelo seja nulo
+     */
     
     public Voo(Voo modelo) throws Exception
     {
@@ -116,6 +183,13 @@ public class Voo implements Cloneable, Comparable<Voo>
         this.numero = modelo.numero;
         this.destino = modelo.destino;
     }
+    
+    /**
+     * Compara dois voos através dos códigos.
+     * 
+     * @param outroVoo    Representa um outro voo cujo código será comparado
+     * @return            Retorna um inteiro menor que zero, maior que zero ou igual a zero
+     */
     
     @Override
     public int compareTo(Voo outroVoo)
