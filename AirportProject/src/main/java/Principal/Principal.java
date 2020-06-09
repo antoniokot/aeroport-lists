@@ -16,7 +16,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Principal extends javax.swing.JFrame 
 {
+    /**
+     * Variável ListaDuplamenteLigadaOrdenadaSemRepeticao que indica a lista de aeroportos.
+     */
     protected ListaDuplamenteLigadaOrdenadaSemRepeticao<Aeroporto> aeroportos;
+    /**
+     * Variável DefaultTableModel que indica um modelo da tabela de voos.
+     */
     protected DefaultTableModel model;
 
     /**
@@ -286,11 +292,6 @@ public class Principal extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    /**
-     * Este método realiza a procura de aeroportos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnProcurarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarAActionPerformed
         try
         {
@@ -313,11 +314,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnProcurarAActionPerformed
 
-    /**
-     * Este método realiza a inclusão de aeroportos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnIncluirAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirAActionPerformed
         try
         {
@@ -344,11 +340,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnIncluirAActionPerformed
 
-    /**
-     * Este método realiza a alteração de aeroportos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnAlterarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarAActionPerformed
         try
         {
@@ -385,11 +376,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnAlterarAActionPerformed
     
-    /**
-     * Este método realiza a exclusão de aeroportos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnExcluirAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAActionPerformed
         try
         {
@@ -428,11 +414,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnExcluirAActionPerformed
 
-    /**
-     * Este método realiza a procura de voos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnProcurarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarVActionPerformed
         try
         {
@@ -473,11 +454,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnProcurarVActionPerformed
 
-    /**
-     * Este método realiza a inclusão de voos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnIncluirVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVActionPerformed
         try
         {
@@ -545,11 +521,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnIncluirVActionPerformed
 
-    /**
-     * Este método realiza a procura de voos para inserção na tabela de exibição.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnExibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirActionPerformed
         try
         {   
@@ -607,11 +578,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnExibirActionPerformed
 
-    /**
-     * Este método realiza o reset da tabela.
-     * 
-     * @param evt Representa o evento do foco do JTabbedPanel.
-     */
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
         try
         {
@@ -625,11 +591,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_jTabbedPane1FocusGained
 
-    /**
-     * Este método realiza a alteração de voos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnAlterarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarVActionPerformed
         try
         {
@@ -713,11 +674,6 @@ public class Principal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnAlterarVActionPerformed
 
-    /**
-     * Este método realiza a exclusão de voos.
-     * 
-     * @param evt Representa o evento do botão pressionado.
-     */
     private void btnExcluirVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirVActionPerformed
         try
         {
@@ -800,6 +756,7 @@ public class Principal extends javax.swing.JFrame
      * 
      * @param voo Representa o voo cujo aeroporto de destino se deseja coletar.
      * @throws Exception Se ocorrer erro ao buscar o aeroporto de destino de um voo.
+     * @return o aeroporto de destino.
      */
     protected Aeroporto getDestinoVoo(Voo voo) throws Exception
     {

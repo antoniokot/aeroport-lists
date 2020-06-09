@@ -8,8 +8,13 @@ package Voo;
  */
 public class Voo implements Cloneable, Comparable<Voo>
 {
-
+    /**
+     * Variável int que indica o número do voo.
+     */
     protected int numero;
+    /**
+     * Variável String que indica o destino do voo.
+     */
     protected String destino;
     
     /**

@@ -12,8 +12,17 @@ import Voo.*;
 public class Aeroporto implements Cloneable, Comparable<Aeroporto>
 {
  
+    /**
+     * Variável String que indica o código do aeroporto.
+     */
     protected String codigo;
+    /**
+     * Variável String que indica a cidade do aeroporto.
+     */
     protected String cidade;
+    /**
+     * Variável ListaDuplamenteLigadaOrdenadaSemRepeticao que indica os voos do aeroporto.
+     */
     protected ListaDuplamenteLigadaOrdenadaSemRepeticao<Voo> voos;
     
     /**
